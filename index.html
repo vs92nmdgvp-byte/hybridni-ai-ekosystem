@@ -1,1073 +1,507 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI THOR — Hybridní AI ekosystém pro podnikatele</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:     #050a15;
-    --bg2:    #080f1f;
-    --bg3:    #0d1829;
-    --accent: #00c8ff;
-    --accent2:#0077b6;
-    --accent3:#00e5ff;
-    --glow:   rgba(0,200,255,0.15);
-    --glow2:  rgba(0,200,255,0.06);
-    --text:   #e8f4ff;
-    --text2:  #8ab4cc;
-    --text3:  #4a7a99;
-    --border: rgba(0,200,255,0.15);
-    --border2:rgba(0,200,255,0.08);
-    --card:   rgba(13,24,41,0.85);
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hybridní AI Ekosystém</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #050a15;
+      color: #e8f4ff;
+      line-height: 1.7;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    section, .diff-section > section, .section { position: relative; z-index: 1; }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      background: radial-gradient(ellipse at 50% 0%, #0a1e35 0%, #050a15 70%);
+      position: relative;
+      z-index: 1;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(0, 200, 255, 0.12);
+      border: 1px solid rgba(0, 200, 255, 0.35);
+      color: #00c8ff;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    h1 {
+      font-size: clamp(36px, 7vw, 80px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 28px;
+      letter-spacing: -1px;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #00c8ff, #0077b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      font-size: clamp(17px, 2.5vw, 22px);
+      color: #8ab4cc;
+      max-width: 620px;
+      margin-bottom: 48px;
+    }
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0077b6, #00c8ff);
+      color: #050a15;
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      background: transparent;
+      color: #00c8ff;
+      border: 1px solid rgba(0, 200, 255, 0.35);
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(0, 200, 255, 0.1); }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
+    /* PROBLEM */
+    .section {
+      padding: 100px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #00c8ff;
+      margin-bottom: 16px;
+    }
+    .section h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .problem-card {
+      background: rgba(0, 200, 255, 0.03);
+      border: 1px solid rgba(0, 200, 255, 0.1);
+      border-radius: 14px;
+      padding: 28px;
+    }
+    .problem-card .icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+    .problem-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .problem-card p {
+      font-size: 15px;
+      color: #5a8aaa;
+    }
 
-  body {
-    font-family:'Inter',-apple-system,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    overflow-x:hidden;
-  }
+    /* ROZDIL */
+    .diff-section {
+      background: rgba(0, 200, 255, 0.02);
+      border-top: 1px solid rgba(0, 200, 255, 0.08);
+      border-bottom: 1px solid rgba(0, 200, 255, 0.08);
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 48px;
+    }
+    @media (max-width: 640px) { .diff-grid { grid-template-columns: 1fr; } }
+    .diff-col {
+      border-radius: 14px;
+      padding: 32px;
+    }
+    .diff-col.old {
+      background: rgba(255,60,60,0.05);
+      border: 1px solid rgba(255,60,60,0.15);
+    }
+    .diff-col.new {
+      background: rgba(0, 200, 255, 0.06);
+      border: 1px solid rgba(0, 200, 255, 0.25);
+    }
+    .diff-col h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .diff-col.old h3 { color: #f87171; }
+    .diff-col.new h3 { color: #00c8ff; }
+    .diff-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .diff-col li {
+      font-size: 15px;
+      color: #7090a8;
+      padding-left: 22px;
+      position: relative;
+    }
+    .diff-col.old li::before { content: '✗'; position: absolute; left: 0; color: #f87171; }
+    .diff-col.new li::before { content: '✓'; position: absolute; left: 0; color: #00c8ff; }
 
-  /* grid bg */
-  body::before {
-    content:'';
-    position:fixed; inset:0;
-    background-image:
-      linear-gradient(rgba(0,200,255,0.025) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(0,200,255,0.025) 1px,transparent 1px);
-    background-size:60px 60px;
-    pointer-events:none; z-index:0;
-  }
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .feature-card {
+      background: rgba(0, 200, 255, 0.03);
+      border: 1px solid rgba(0, 200, 255, 0.1);
+      border-radius: 14px;
+      padding: 32px;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(0, 200, 255, 0.35); }
+    .feature-card .icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 15px;
+      color: #5a8aaa;
+    }
 
-  /* NAV */
-  nav {
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    padding:18px 40px;
-    display:flex; align-items:center; justify-content:space-between;
-    background:rgba(5,10,21,0.9);
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--border2);
-  }
-  .nav-logo {
-    font-size:20px; font-weight:900; letter-spacing:3px;
-    color:var(--accent); text-shadow:0 0 20px rgba(0,200,255,0.4);
-  }
-  .nav-logo span { color:var(--text); }
-  .nav-cta {
-    background:transparent; border:1px solid var(--accent);
-    color:var(--accent); padding:10px 24px;
-    font-size:13px; font-weight:700; letter-spacing:1px;
-    cursor:pointer; transition:all 0.3s; text-decoration:none;
-    font-family:'Inter',sans-serif; text-transform:uppercase;
-  }
-  .nav-cta:hover { background:var(--accent); color:var(--bg); }
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .price-card {
+      background: rgba(0, 200, 255, 0.03);
+      border: 1px solid rgba(0, 200, 255, 0.1);
+      border-radius: 14px;
+      padding: 36px;
+      text-align: center;
+    }
+    .price-card.featured {
+      background: rgba(0, 200, 255, 0.08);
+      border-color: rgba(0, 200, 255, 0.4);
+      position: relative;
+    }
+    .featured-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #0077b6, #00c8ff);
+      color: #050a15;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 20px;
+    }
+    .price-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .price-card .price {
+      font-size: 42px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00c8ff, #0077b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+    .price-card .price-note {
+      font-size: 13px;
+      color: #3a6a88;
+      margin-bottom: 24px;
+    }
+    .price-card ul {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .price-card li {
+      font-size: 15px;
+      color: #7090a8;
+      padding-left: 22px;
+      position: relative;
+    }
+    .price-card li::before { content: '✓'; position: absolute; left: 0; color: #00c8ff; }
+    .price-card a {
+      display: block;
+      text-align: center;
+      padding: 13px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .price-card.featured a {
+      background: linear-gradient(135deg, #0077b6, #00c8ff);
+      color: #050a15;
+      font-weight: 700;
+    }
+    .price-card:not(.featured) a {
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      color: #00c8ff;
+    }
 
-  /* SECTIONS */
-  section { position:relative; z-index:1; }
+    /* CTA FINAL */
+    .final-cta {
+      text-align: center;
+      padding: 120px 20px;
+      background: radial-gradient(ellipse at 50% 100%, #0a1e35 0%, #050a15 70%);
+      position: relative;
+      z-index: 1;
+    }
+    .final-cta h2 {
+      font-size: clamp(28px, 5vw, 56px);
+      font-weight: 800;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+    .final-cta p {
+      font-size: 18px;
+      color: #5a8aaa;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
 
-  /* HERO */
-  .hero {
-    min-height:100vh; display:flex; align-items:center;
-    justify-content:center; text-align:center;
-    padding:120px 40px 80px;
-  }
-  .hero-glow {
-    position:absolute; top:50%; left:50%;
-    transform:translate(-50%,-60%);
-    width:800px; height:800px;
-    background:radial-gradient(ellipse,rgba(0,200,255,0.07) 0%,transparent 70%);
-    pointer-events:none;
-  }
-  .hero-inner { position:relative; max-width:820px; }
-  .hero-tag {
-    display:inline-block; border:1px solid var(--accent);
-    color:var(--accent); font-size:11px; font-weight:700;
-    letter-spacing:4px; padding:8px 20px; margin-bottom:32px;
-    text-transform:uppercase;
-  }
-  .hero h1 {
-    font-size:clamp(52px,8vw,96px); font-weight:900;
-    letter-spacing:-2px; line-height:1; margin-bottom:20px;
-    text-transform:uppercase;
-  }
-  .hero h1 .blue {
-    color:var(--accent); text-shadow:0 0 40px rgba(0,200,255,0.4);
-  }
-  .hero-sub {
-    font-size:clamp(18px,2.5vw,24px); font-weight:300;
-    color:var(--text2); margin-bottom:40px; letter-spacing:0.5px;
-  }
-  .hero-desc {
-    max-width:640px; margin:0 auto 52px;
-    font-size:17px; line-height:1.8; color:var(--text2);
-  }
-  .hero-desc strong { color:var(--text); font-weight:600; }
-  .hero-buttons { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-
-  .btn-primary {
-    background:var(--accent); color:var(--bg);
-    padding:18px 48px; font-size:15px; font-weight:700;
-    letter-spacing:1.5px; text-transform:uppercase;
-    cursor:pointer; border:none; text-decoration:none;
-    display:inline-block; transition:all 0.3s;
-    font-family:'Inter',sans-serif;
-  }
-  .btn-primary:hover {
-    background:var(--accent3); box-shadow:0 0 40px rgba(0,200,255,0.35);
-    transform:translateY(-2px);
-  }
-  .btn-outline {
-    background:transparent; color:var(--text2);
-    padding:18px 48px; font-size:15px; font-weight:500;
-    letter-spacing:1px; cursor:pointer;
-    border:1px solid var(--border);
-    text-decoration:none; display:inline-block; transition:all 0.3s;
-    font-family:'Inter',sans-serif;
-  }
-  .btn-outline:hover { border-color:var(--accent); color:var(--accent); }
-
-  .scroll-line-wrap {
-    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    color:var(--text3); font-size:11px; letter-spacing:2px; text-transform:uppercase;
-  }
-  .scroll-line {
-    width:1px; height:40px;
-    background:linear-gradient(to bottom,var(--accent),transparent);
-    animation:scrollAnim 2s ease-in-out infinite;
-  }
-  @keyframes scrollAnim {
-    0%,100%{opacity:.3;transform:scaleY(.8);}
-    50%{opacity:1;transform:scaleY(1);}
-  }
-
-  /* BANNER STRIP */
-  .banner {
-    background:linear-gradient(135deg,rgba(0,119,182,0.25),rgba(0,200,255,0.1));
-    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-    padding:28px 40px; text-align:center;
-  }
-  .banner-inner {
-    max-width:900px; margin:0 auto;
-    display:flex; justify-content:center; gap:60px;
-    flex-wrap:wrap; align-items:center;
-  }
-  .banner-item { font-size:18px; font-weight:700; }
-  .banner-item span { color:var(--accent); }
-  .banner-sep { color:var(--text3); font-size:20px; }
-
-  /* SECTION HEADER */
-  .section-wrap { max-width:1100px; margin:0 auto; padding:0 40px; }
-  .section-header { text-align:center; margin-bottom:64px; }
-  .section-label {
-    font-size:11px; font-weight:700; letter-spacing:4px;
-    text-transform:uppercase; color:var(--accent); margin-bottom:16px;
-  }
-  .section-header h2 {
-    font-size:clamp(32px,4vw,52px); font-weight:800;
-    letter-spacing:-1px; line-height:1.1;
-  }
-  .section-header p {
-    margin-top:20px; font-size:17px; color:var(--text2);
-    max-width:600px; margin-left:auto; margin-right:auto; line-height:1.7;
-  }
-
-  /* AGENTS GRID */
-  .agents-section { padding:100px 0; }
-  .agents-grid {
-    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
-  }
-  .agent-card {
-    background:var(--card); border:1px solid var(--border2);
-    padding:36px 32px; transition:all 0.3s;
-    position:relative; overflow:hidden;
-  }
-  .agent-card::before {
-    content:''; position:absolute; top:0; left:0; right:0;
-    height:2px; background:linear-gradient(90deg,transparent,var(--accent),transparent);
-    opacity:0; transition:opacity 0.3s;
-  }
-  .agent-card:hover { border-color:var(--border); transform:translateY(-4px); }
-  .agent-card:hover::before { opacity:1; }
-  .agent-icon { font-size:32px; margin-bottom:16px; }
-  .agent-title {
-    font-size:16px; font-weight:700; letter-spacing:1px;
-    text-transform:uppercase; color:var(--accent); margin-bottom:10px;
-  }
-  .agent-desc { font-size:14px; color:var(--text2); line-height:1.6; }
-
-  /* FEATURES */
-  .features-section { padding:100px 0; background:var(--bg2); }
-  .features-grid {
-    display:grid; grid-template-columns:repeat(2,1fr); gap:24px;
-  }
-  .feature-card {
-    background:var(--card); border:1px solid var(--border2);
-    padding:32px; display:flex; gap:20px; align-items:flex-start;
-    transition:border-color 0.3s;
-  }
-  .feature-card:hover { border-color:var(--border); }
-  .feature-icon {
-    flex-shrink:0; width:48px; height:48px;
-    background:rgba(0,200,255,0.08); border:1px solid var(--border);
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px;
-  }
-  .feature-text h3 {
-    font-size:15px; font-weight:700; letter-spacing:0.5px;
-    text-transform:uppercase; color:var(--text); margin-bottom:8px;
-  }
-  .feature-text p { font-size:14px; color:var(--text2); line-height:1.6; }
-
-  /* WHY DIFFERENT */
-  .why-section { padding:100px 0; }
-  .why-grid {
-    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
-    margin-top:0;
-  }
-  .why-card {
-    background:var(--card); border:1px solid var(--border2);
-    padding:32px; text-align:center; transition:all 0.3s;
-  }
-  .why-card:hover { border-color:var(--border); transform:translateY(-4px); }
-  .why-check {
-    font-size:28px; margin-bottom:16px; color:var(--accent);
-  }
-  .why-card h3 { font-size:15px; font-weight:700; margin-bottom:10px; }
-  .why-card p { font-size:13px; color:var(--text2); line-height:1.6; }
-
-  /* BRIEF FORM */
-  .brief-section {
-    padding:100px 0; background:var(--bg2);
-  }
-  .brief-wrap { max-width:760px; margin:0 auto; padding:0 40px; }
-  .brief-box {
-    background:var(--card); border:1px solid var(--border);
-    padding:56px 48px;
-    position:relative; overflow:hidden;
-  }
-  .brief-box::before {
-    content:''; position:absolute; top:0; left:0; right:0;
-    height:3px;
-    background:linear-gradient(90deg,var(--accent2),var(--accent),var(--accent3));
-  }
-
-  /* progress */
-  .progress-bar {
-    display:flex; gap:8px; margin-bottom:48px; align-items:center;
-  }
-  .progress-step {
-    flex:1; height:3px; background:var(--border2);
-    transition:background 0.4s;
-  }
-  .progress-step.active { background:var(--accent); }
-  .progress-step.done { background:rgba(0,200,255,0.4); }
-  .progress-label {
-    font-size:11px; letter-spacing:2px; text-transform:uppercase;
-    color:var(--text3); white-space:nowrap;
-  }
-
-  /* steps */
-  .step { display:none; }
-  .step.active { display:block; }
-  .step-num {
-    font-size:11px; font-weight:700; letter-spacing:3px;
-    text-transform:uppercase; color:var(--accent); margin-bottom:12px;
-  }
-  .step h3 {
-    font-size:clamp(22px,3vw,32px); font-weight:800;
-    line-height:1.2; margin-bottom:10px;
-  }
-  .step-sub { font-size:15px; color:var(--text2); margin-bottom:36px; line-height:1.6; }
-
-  /* option grid */
-  .options-grid {
-    display:grid; gap:12px; margin-bottom:36px;
-  }
-  .options-grid.col2 { grid-template-columns:repeat(2,1fr); }
-  .options-grid.col1 { grid-template-columns:1fr; }
-  .opt {
-    background:rgba(0,200,255,0.04); border:1px solid var(--border2);
-    padding:18px 20px; cursor:pointer; transition:all 0.25s;
-    display:flex; align-items:center; gap:14px;
-    font-size:14px; font-weight:500; color:var(--text2);
-    user-select:none;
-  }
-  .opt:hover { border-color:var(--border); color:var(--text); }
-  .opt.selected {
-    background:rgba(0,200,255,0.1); border-color:var(--accent);
-    color:var(--text);
-  }
-  .opt-icon { font-size:20px; flex-shrink:0; }
-  .opt-label { flex:1; }
-  .opt-check {
-    width:18px; height:18px; border:1px solid var(--border);
-    flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    font-size:11px; color:var(--accent); transition:all 0.25s;
-  }
-  .opt.selected .opt-check { background:var(--accent); color:var(--bg); border-color:var(--accent); }
-
-  /* text inputs */
-  .input-group { margin-bottom:20px; }
-  .input-group label {
-    display:block; font-size:12px; font-weight:600; letter-spacing:1.5px;
-    text-transform:uppercase; color:var(--text2); margin-bottom:10px;
-  }
-  .input-group input, .input-group textarea {
-    width:100%; background:rgba(0,200,255,0.04);
-    border:1px solid var(--border2); padding:16px 18px;
-    font-family:'Inter',sans-serif; font-size:15px; color:var(--text);
-    transition:border-color 0.3s; outline:none;
-  }
-  .input-group input:focus, .input-group textarea:focus {
-    border-color:var(--accent);
-  }
-  .input-group input::placeholder, .input-group textarea::placeholder {
-    color:var(--text3);
-  }
-  .input-group textarea { min-height:100px; resize:vertical; }
-
-  /* step nav */
-  .step-nav { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
-  .btn-next {
-    background:var(--accent); color:var(--bg);
-    padding:16px 40px; font-size:14px; font-weight:700;
-    letter-spacing:1.5px; text-transform:uppercase;
-    cursor:pointer; border:none; font-family:'Inter',sans-serif;
-    transition:all 0.3s;
-  }
-  .btn-next:hover {
-    background:var(--accent3); box-shadow:0 0 30px rgba(0,200,255,0.3);
-  }
-  .btn-back {
-    background:transparent; color:var(--text3);
-    padding:16px 24px; font-size:14px; font-weight:500;
-    cursor:pointer; border:none; font-family:'Inter',sans-serif;
-    transition:color 0.3s;
-  }
-  .btn-back:hover { color:var(--text); }
-  .step-count { font-size:12px; color:var(--text3); letter-spacing:1px; }
-
-  /* summary */
-  .summary-box {
-    background:rgba(0,200,255,0.05); border:1px solid var(--border);
-    padding:28px; margin-bottom:32px;
-  }
-  .summary-row {
-    display:flex; gap:12px; align-items:flex-start;
-    padding:10px 0; border-bottom:1px solid var(--border2);
-    font-size:14px;
-  }
-  .summary-row:last-child { border-bottom:none; }
-  .summary-key { color:var(--text3); min-width:140px; flex-shrink:0; }
-  .summary-val { color:var(--text); font-weight:500; }
-
-  .btn-send {
-    width:100%; background:var(--accent); color:var(--bg);
-    padding:20px; font-size:15px; font-weight:700;
-    letter-spacing:2px; text-transform:uppercase;
-    cursor:pointer; border:none; font-family:'Inter',sans-serif;
-    transition:all 0.3s; display:block; text-align:center;
-    text-decoration:none;
-  }
-  .btn-send:hover {
-    background:var(--accent3); box-shadow:0 0 40px rgba(0,200,255,0.3);
-  }
-
-  /* thank you */
-  .thank-you { text-align:center; padding:20px 0; }
-  .thank-you .check-big { font-size:64px; margin-bottom:24px; }
-  .thank-you h3 { font-size:28px; font-weight:800; margin-bottom:16px; }
-  .thank-you p { color:var(--text2); font-size:16px; line-height:1.7; max-width:480px; margin:0 auto 32px; }
-
-  /* CONTACT */
-  .contact-section { padding:100px 0; }
-  .contact-grid {
-    display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;
-  }
-  .contact-info h2 { font-size:clamp(28px,3.5vw,44px); font-weight:800; margin-bottom:20px; }
-  .contact-info p { font-size:16px; color:var(--text2); line-height:1.7; margin-bottom:36px; }
-  .contact-links { display:flex; flex-direction:column; gap:16px; }
-  .contact-link {
-    display:flex; align-items:center; gap:14px; font-size:15px;
-    color:var(--text2); text-decoration:none; transition:color 0.3s;
-  }
-  .contact-link:hover { color:var(--accent); }
-  .contact-link-icon { font-size:20px; }
-  .contact-box {
-    background:var(--card); border:1px solid var(--border2); padding:40px;
-    text-align:center;
-  }
-  .contact-box h3 { font-size:22px; font-weight:700; margin-bottom:12px; }
-  .contact-box p { color:var(--text2); font-size:14px; margin-bottom:28px; line-height:1.6; }
-
-  /* FOOTER */
-  footer {
-    padding:40px; text-align:center;
-    border-top:1px solid var(--border2);
-    font-size:13px; color:var(--text3);
-  }
-  footer strong { color:var(--accent); }
-
-  /* RESPONSIVE */
-  @media(max-width:768px) {
-    nav { padding:16px 20px; }
-    .agents-grid, .features-grid, .why-grid, .contact-grid { grid-template-columns:1fr; }
-    .options-grid.col2 { grid-template-columns:1fr; }
-    .brief-box { padding:36px 24px; }
-    .banner-inner { gap:28px; }
-    .section-wrap { padding:0 20px; }
-    .brief-wrap { padding:0 20px; }
-  }
-</style>
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      border-top: 1px solid rgba(0, 200, 255, 0.08);
+      font-size: 14px;
+      color: #2a5a72;
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">AI <span>THOR</span></div>
-  <a href="#brief" class="nav-cta">Mam zajem</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="hero-tag">Hybridni AI ekosystem na miru</div>
-    <h1><span class="blue">AI</span> THOR<br>pro podnikatele</h1>
-    <p class="hero-sub">Zefektivnete operativu. Najdete prostor pro rust.</p>
-    <p class="hero-desc">
-      Nejde o bezneho chatbota ani univerzalni aplikaci. Jde o vlastni AI ekosystem,
-      ktery bude postaveny primo kolem <strong>tve prace, firmy, dokumentu a komunikace</strong> —
-      navrzeny tak, aby fungoval 24/7 bez ztraty kontextu.
-    </p>
-    <div class="hero-buttons">
-      <a href="#brief" class="btn-primary">Chci vlastni ekosystem</a>
-      <a href="#co-zahrnuje" class="btn-outline">Jak to funguje</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">Hybridní AI Ekosystém</div>
+    <h1>Tvuj AI partner,<br><span>ne jen nastroj</span></h1>
+    <p class="subtitle">Aktivni orchestrator, ktery myslí, jedná a pamatuje si. Pro podnikatele, kouce a konzultanty, kteri nechtejí dalsi app — ale skutecneho provozního partnera.</p>
+    <div class="cta-group">
+      <a href="#kontakt" class="btn-primary">Chci vedet vice</a>
+      <a href="#rozdil" class="btn-secondary">Jak se lisime</a>
     </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <div style="background: rgba(0,200,255,0.02); border-top: 1px solid rgba(0,200,255,0.08); position: relative; z-index: 1;">
+    <section class="section">
+      <div class="section-label">Problem</div>
+      <h2>Vas cas riidí nastroje.<br>Melo by to byt obracene.</h2>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="icon">📬</div>
+          <h3>Email, ktery nespravuje sam sebe</h3>
+          <p>Cítate a tridíte rucne. Dulezite zpravy se ztracejí v sumu.</p>
+        </div>
+        <div class="problem-card">
+          <div class="icon">🗂</div>
+          <h3>Projekty bez pameti</h3>
+          <p>Kazdy novy nastroj zacína od nuly. Zadny kontext, zadna navaznost.</p>
+        </div>
+        <div class="problem-card">
+          <div class="icon">⏰</div>
+          <h3>Reaktivní rezim</h3>
+          <p>Cas trávíte reagovaním na veci misto praci na tom, co fakt záleží.</p>
+        </div>
+        <div class="problem-card">
+          <div class="icon">🧩</div>
+          <h3>Hromada nepropojenych app</h3>
+          <p>10 nastroju, 10 notifikací, nulova synchornizace.</p>
+        </div>
+      </div>
+    </section>
   </div>
-  <div class="scroll-line-wrap">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
+
+  <!-- ROZDIL -->
+  <section class="section" id="rozdil">
+    <div class="section-label">Resení</div>
+    <h2>Jiné nastroje ctou a odpovídají.<br>Hybridní ekosystém jedná.</h2>
+    <div class="diff-grid">
+      <div class="diff-col old">
+        <h3>Ostatní AI nastroje</h3>
+        <ul>
+          <li>Pasivní — cekají na otázku</li>
+          <li>Bez pameti — kazdy chat od nuly</li>
+          <li>Bez akce — jen text zpet</li>
+          <li>Bez integrace — izolovaní od vaseho svetá</li>
+          <li>Chatbot logika</li>
+        </ul>
+      </div>
+      <div class="diff-col new">
+        <h3>Hybridní AI Ekosystém</h3>
+        <ul>
+          <li>Proaktivní — sleduje, reportuje, eskaluje</li>
+          <li>Trvalá pamet — zná vas kontext a historii</li>
+          <li>Reálné akce — email, kalendár, soubory, notifikace</li>
+          <li>Plná integrace — Gmail, Drive, Telegram, macOS</li>
+          <li>Operacní partner logika</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="diff-section">
+    <section class="section">
+      <div class="section-label">Co umí</div>
+      <h2>Vas operacní partner<br>24 hodin denne</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="icon">🧠</div>
+          <h3>Trvalá, personalizovaná pamet</h3>
+          <p>Zná váš kontext, vaše projekty, vaše priority. Nemusíte nic opakovat.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📧</div>
+          <h3>Email a komunikace</h3>
+          <p>Cte, tridí, odpovídá a archivuje. Dulezité veci vám reportuje.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📅</div>
+          <h3>Kalendarní a projektové rízení</h3>
+          <p>Vídí, co mas naplanováno, upozorní na konflikty a navrhne resení.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🎙</div>
+          <h3>Hlasová komunikace</h3>
+          <p>Mluvíte, píšete, posilate hlasovky — vždy reaguje ve vašem stylu.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🤖</div>
+          <h3>Podrízení agenti</h3>
+          <p>Specialné agenti pro specifické úkoly — rízeni hlavním orchestrátorem.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔒</div>
+          <h3>Vase data, váš provoz</h3>
+          <p>Konfigurovatelné politiky pristupu. Vy rozhodujete, co agent sme a nesmí.</p>
+        </div>
+      </div>
+    </section>
   </div>
-</section>
 
-<!-- BANNER -->
-<div class="banner">
-  <div class="banner-inner">
-    <div class="banner-item">Vice <span>casu</span></div>
-    <div class="banner-sep">|</div>
-    <div class="banner-item">Vice <span>kontroly</span></div>
-    <div class="banner-sep">|</div>
-    <div class="banner-item">Mene <span>placeni agenturum</span></div>
-  </div>
-</div>
-
-<!-- AGENTS -->
-<section class="agents-section" id="co-zahrnuje">
-  <div class="section-wrap">
-    <div class="section-header">
-      <div class="section-label">Co system zahrnuje</div>
-      <h2>9 specializovanych agentu.<br>1 centralni koordinator.</h2>
-      <p>Orchestrator CEO si podle potreby vola dalsi specializovane agenty. Kazdy agent vi, co ma delat — bez zbytecneho ruceni.</p>
-    </div>
-    <div class="agents-grid">
-      <div class="agent-card">
-        <div class="agent-icon">🧠</div>
-        <div class="agent-title">Orchestrator CEO</div>
-        <div class="agent-desc">Centralni koordinator, ktery drzi kontext, chape priority a rika ostatnim agentum, co maji delat.</div>
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="section-label">Modely spoluprace</div>
+    <h2>Pro kazdeho jinak —<br>podle toho, co potrebujete</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Subscription</h3>
+        <div class="price">Od 4 900 Kc</div>
+        <div class="price-note">/ mesíc</div>
+        <ul>
+          <li>Pristup k ekosystemu jako sluzbe</li>
+          <li>Personalizovaná pamet a kontext</li>
+          <li>Email + Telegram integrace</li>
+          <li>Mesícní aktualizace a podpora</li>
+        </ul>
+        <a href="#kontakt">Zacít</a>
       </div>
-      <div class="agent-card">
-        <div class="agent-icon">📊</div>
-        <div class="agent-title">Analytik</div>
-        <div class="agent-desc">Zpracovava data, pripravi podklady, hlida klicove metriky a odhaluje priorizitost.</div>
+      <div class="price-card featured">
+        <div class="featured-badge">Nejpopulárnejs</div>
+        <h3>Setup + Subscription</h3>
+        <div class="price">Od 14 900 Kc</div>
+        <div class="price-note">setup + mesícní poplatek</div>
+        <ul>
+          <li>Plná konfigurace na miru</li>
+          <li>Integrace vasich nástroju a dat</li>
+          <li>Trénink na vas kontext a projekty</li>
+          <li>Mesícní podpora a rozvoj</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#kontakt">Chci to takhle</a>
       </div>
-      <div class="agent-card">
-        <div class="agent-icon">♟</div>
-        <div class="agent-title">Strateg</div>
-        <div class="agent-desc">Mysli dopredne. Pomaha navrhovat rozhodnutia, testovat hypotezy a planovani rustem.</div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-icon">✍️</div>
-        <div class="agent-title">Copywriter</div>
-        <div class="agent-desc">Tvorba obsahu, textu na web, posta, nabidek a komunikacnich materialu v tvem stylu.</div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-icon">🎨</div>
-        <div class="agent-title">Grafik</div>
-        <div class="agent-desc">Tvorba vizualu, podkladu pro kampaně, prezentaci a grafickych materialu.</div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-icon">📣</div>
-        <div class="agent-title">Kampan manazer</div>
-        <div class="agent-desc">Navrh, realizace a sledovani marketingovych kampani. Nic ti nezapadne.</div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-icon">📧</div>
-        <div class="agent-title">E-mailova komunikace</div>
-        <div class="agent-desc">Tridi, odpovida, pripravi drafty a hlida dulezite zpravy. Inbox pod kontrolou.</div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-icon">📅</div>
-        <div class="agent-title">Planovac</div>
-        <div class="agent-desc">Terminy, ukoly, prioritizace a priprava dennich prehledu. Nic ti neunikne.</div>
-      </div>
-      <div class="agent-card">
-        <div class="agent-icon">💰</div>
-        <div class="agent-title">Financni manazer</div>
-        <div class="agent-desc">Prehled o financich, cashflow, upozorneni a financni podklady pro rozhodovani.</div>
+      <div class="price-card">
+        <h3>Done-For-You</h3>
+        <div class="price">Od 49 900 Kc</div>
+        <div class="price-note">jednorázove</div>
+        <ul>
+          <li>Vlastní ekosystém na klic</li>
+          <li>Kompletní architektura a nasazení</li>
+          <li>White-label moznost</li>
+          <li>Zaclenení do stavajícího businessu</li>
+        </ul>
+        <a href="#kontakt">Domluvit se</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FEATURES -->
-<section class="features-section" id="vlastnosti">
-  <div class="section-wrap">
-    <div class="section-header">
-      <div class="section-label">Klic vlastnosti</div>
-      <h2>System postaveny<br>primo pro tebe</h2>
-      <p>Kazdy ekosystem je unikatni. Navrhujeme ho podle toho, jak realne funguje tvoje prace — ne podle obecne sablony.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🔄</div>
-        <div class="feature-text">
-          <h3>Provoz 24/7</h3>
-          <p>System bezi nepretrzite. Hlida vybrane oblasti, sleduje dulezite veci a pripravuje podklady — i kdyz spis.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🧩</div>
-        <div class="feature-text">
-          <h3>Navrh podle tve reality</h3>
-          <p>System se nestavi podle obecne sablony. Bude navrzeny presne podle toho, jak realne funguje tvoje prace, firma a cile.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📈</div>
-        <div class="feature-text">
-          <h3>Adaptivni uceni</h3>
-          <p>Postupne se prizpusobuje tve realite. Casem lepe chape, co je pro tebe dulezite, co se opakuje a co ma hlida automaticky.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <div class="feature-text">
-          <h3>Bezpecna sprava dat</h3>
-          <p>Citliva data nejsou rozhazena po cizich nastrojich. Plna kontrola nad tim, kde jsou data a co s nimi AI dela.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💾</div>
-        <div class="feature-text">
-          <h3>Zachovani pameti systemu</h3>
-          <p>System si drzi kontext, pravidla a historii. Pri zmene zarizeni nebo rozsireni nezacinete znovu od nuly.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🖥️</div>
-        <div class="feature-text">
-          <h3>Beh na vlastnim zarizeni</h3>
-          <p>Dulezite casti ekosystemu bezi na vlastnim zarizeni nebo prostedi — s plnou kontrolou nad daty a dlouhodobou nezavislosti.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔗</div>
-        <div class="feature-text">
-          <h3>Napojeni na existujici systemy</h3>
-          <p>Propojuje se s nastroji, ktere uz ve firme pouzivas. Nemus menit to, co funguje.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🌱</div>
-        <div class="feature-text">
-          <h3>System roste s tebou</h3>
-          <p>Zacnes jako osobni vrstva a postupne rozsiruje o dalsi agenty, oblasti firmy nebo vybrane zamestnance.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- FINAL CTA -->
+  <section class="final-cta" id="kontakt">
+    <h2>Pripraveni mít AI partnera,<br>ne jen chatbota?</h2>
+    <p>Napiste nam a domluvíme si 30minutový hovor. Bez závazku, bez omáčky.</p>
+    <a href="mailto:ai.thor.ekosystem@gmail.com" class="btn-primary" style="display:inline-block;">Napsat zprávu</a>
+  </section>
 
-<!-- WHY DIFFERENT -->
-<section class="why-section">
-  <div class="section-wrap">
-    <div class="section-header">
-      <div class="section-label">Proc je to jine</div>
-      <h2>Ne cloud. Ne agentura.<br>Tvoje vlastni AI.</h2>
-    </div>
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="why-check">✓</div>
-        <h3>Bezpecne lokalni prostredi</h3>
-        <p>Bezi na tvem vlastnim pocitaci nebo Mac mini. Data nezustanva u tretich stran.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-check">✓</div>
-        <h3>Pamet se neztraci</h3>
-        <p>Kontext, pravidla a pracovni navyky jsou bezpecne ulozene. Nezacinat od nuly.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-check">✓</div>
-        <h3>Bezi na Anthropic predplatnem</h3>
-        <p>Zacnes se zakladnim predplatnem od Anthropicu — zadne skryte poplatky navic.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-check">✓</div>
-        <h3>Nezavislost na jednom AI</h3>
-        <p>Ekosystem neni zavazany na jednoho poskytovatele AI. Lze pruzne menit a rozsirovat.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-check">✓</div>
-        <h3>Bezpecne zalohy</h3>
-        <p>Cely ekosystem zalohovan — agenti, jejich pamet, nastaveni, pravidla i pracovni kontext.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-check">✓</div>
-        <h3>Prenositelne reseni</h3>
-        <p>Neni zavazano na jedno zarizeni. V budoucnu prenesitelne, obnovitelne nebo rozsiritelne.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <footer>
+    &copy; 2026 AI THOR — Hybridní AI Ekosystém | Michal / Thor | ai.thor.ekosystem@gmail.com | 736 671 943
+  </footer>
 
-<!-- BRIEF FORM -->
-<section class="brief-section" id="brief">
-  <div class="brief-wrap">
-    <div class="section-header" style="text-align:left;margin-bottom:48px;">
-      <div class="section-label">Klikaci brief</div>
-      <h2>Navrhnem system<br>primo pro tebe</h2>
-      <p style="margin-left:0;">Vypln kratky brief a my se ti ozveme s navrhem ekosystemu na miru. Zadne zavazky — jen prvni krok ke spolecnemu rozhovoru.</p>
-    </div>
-
-    <div class="brief-box">
-      <!-- progress -->
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:40px;">
-        <div class="progress-bar" style="flex:1;" id="progressBar">
-          <div class="progress-step active" id="ps1"></div>
-          <div class="progress-step" id="ps2"></div>
-          <div class="progress-step" id="ps3"></div>
-          <div class="progress-step" id="ps4"></div>
-          <div class="progress-step" id="ps5"></div>
-        </div>
-        <div class="progress-label" id="progressLabel">1 / 5</div>
-      </div>
-
-      <!-- STEP 1: Kdo jsi -->
-      <div class="step active" id="step1">
-        <div class="step-num">Krok 1</div>
-        <h3>Kdo jsi?</h3>
-        <p class="step-sub">Vyberte nejblizsi popis tve situace.</p>
-        <div class="options-grid col2" id="s1opts">
-          <div class="opt" data-group="s1" data-val="Podnikatel / freelancer">
-            <span class="opt-icon">👤</span>
-            <span class="opt-label">Podnikatel / freelancer<br><small style="color:var(--text3);font-size:12px;">Pracuju sam, chci usetrit cas</small></span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt" data-group="s1" data-val="Majitel firmy s tymem">
-            <span class="opt-icon">🏢</span>
-            <span class="opt-label">Majitel firmy s tymem<br><small style="color:var(--text3);font-size:12px;">Mam tym, chci lepe ridit</small></span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt" data-group="s1" data-val="Manazer / vedouci tymu">
-            <span class="opt-icon">👔</span>
-            <span class="opt-label">Manazer / vedouci tymu<br><small style="color:var(--text3);font-size:12px;">Odpovidam za vysledky tymu</small></span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt" data-group="s1" data-val="Executive / CEO">
-            <span class="opt-icon">🎯</span>
-            <span class="opt-label">Executive / CEO<br><small style="color:var(--text3);font-size:12px;">Strategie a rozhodovani na urovni firmy</small></span>
-            <span class="opt-check">✓</span>
-          </div>
-        </div>
-        <div class="step-nav">
-          <div></div>
-          <div style="display:flex;align-items:center;gap:24px;">
-            <span class="step-count">1 z 5</span>
-            <button class="btn-next" onclick="goNext(1)">Pokracovat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 2: Vyzvy -->
-      <div class="step" id="step2">
-        <div class="step-num">Krok 2</div>
-        <h3>Kde te to nejvic brzdi?</h3>
-        <p class="step-sub">Vyberte 1–3 oblasti, ktere ti berou nejvice casu nebo energie. (vice voleb)</p>
-        <div class="options-grid col1" id="s2opts">
-          <div class="opt multi" data-group="s2" data-val="Pretizena e-mailova komunikace">
-            <span class="opt-icon">📧</span>
-            <span class="opt-label">Pretizena e-mailova komunikace</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s2" data-val="Ztrata prehledu o projektech a terminech">
-            <span class="opt-icon">📅</span>
-            <span class="opt-label">Ztrata prehledu o projektech a terminech</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s2" data-val="Priprava obsahu a kampani trva prilis dlouho">
-            <span class="opt-icon">✍️</span>
-            <span class="opt-label">Priprava obsahu a kampani trva prilis dlouho</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s2" data-val="Financni prehled a planovani">
-            <span class="opt-icon">💰</span>
-            <span class="opt-label">Financni prehled a planovani</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s2" data-val="Delegovani a koordinace tymu">
-            <span class="opt-icon">👥</span>
-            <span class="opt-label">Delegovani a koordinace tymu</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s2" data-val="Hledani novych klientu a obchod">
-            <span class="opt-icon">🚀</span>
-            <span class="opt-label">Hledani novych klientu a obchod</span>
-            <span class="opt-check">✓</span>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goBack(2)">Zpet</button>
-          <div style="display:flex;align-items:center;gap:24px;">
-            <span class="step-count">2 z 5</span>
-            <button class="btn-next" onclick="goNext(2)">Pokracovat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 3: Agenti -->
-      <div class="step" id="step3">
-        <div class="step-num">Krok 3</div>
-        <h3>Ktere oblasti te zajimaji nejvic?</h3>
-        <p class="step-sub">Vyberte, se kterymi agenty by tvuj system mel zacit. (vice voleb)</p>
-        <div class="options-grid col2" id="s3opts">
-          <div class="opt multi" data-group="s3" data-val="CEO orchestrator (centralni koordinace)">
-            <span class="opt-icon">🧠</span>
-            <span class="opt-label">CEO orchestrator</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s3" data-val="Analytik (data a prehled)">
-            <span class="opt-icon">📊</span>
-            <span class="opt-label">Analytik</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s3" data-val="Strateg (planovani a rozhodovani)">
-            <span class="opt-icon">♟</span>
-            <span class="opt-label">Strateg</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s3" data-val="Copywriter (obsah a texty)">
-            <span class="opt-icon">✍️</span>
-            <span class="opt-label">Copywriter</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s3" data-val="Kampan manazer (marketing)">
-            <span class="opt-icon">📣</span>
-            <span class="opt-label">Kampan manazer</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s3" data-val="E-mailova komunikace">
-            <span class="opt-icon">📧</span>
-            <span class="opt-label">E-mailova komunikace</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s3" data-val="Planovac a terminy">
-            <span class="opt-icon">📅</span>
-            <span class="opt-label">Planovac a terminy</span>
-            <span class="opt-check">✓</span>
-          </div>
-          <div class="opt multi" data-group="s3" data-val="Financni manazer">
-            <span class="opt-icon">💰</span>
-            <span class="opt-label">Financni manazer</span>
-            <span class="opt-check">✓</span>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goBack(3)">Zpet</button>
-          <div style="display:flex;align-items:center;gap:24px;">
-            <span class="step-count">3 z 5</span>
-            <button class="btn-next" onclick="goNext(3)">Pokracovat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 4: Kontext -->
-      <div class="step" id="step4">
-        <div class="step-num">Krok 4</div>
-        <h3>Par slov o tve firme</h3>
-        <p class="step-sub">Nemus psat roman. Par vety nebo klic slova staci.</p>
-        <div class="input-group">
-          <label>Obor podnikani</label>
-          <input type="text" id="f_obor" placeholder="Napr. realitni agentura, e-shop, kouc, IT firma...">
-        </div>
-        <div class="input-group">
-          <label>Velikost firmy (pocet lidi)</label>
-          <div class="options-grid col2" style="margin-top:8px;" id="s4size">
-            <div class="opt" data-group="s4" data-val="1 osoba (ja sam/sama)">
-              <span class="opt-label">1 osoba</span>
-              <span class="opt-check">✓</span>
-            </div>
-            <div class="opt" data-group="s4" data-val="2–10 lidi">
-              <span class="opt-label">2–10 lidi</span>
-              <span class="opt-check">✓</span>
-            </div>
-            <div class="opt" data-group="s4" data-val="11–50 lidi">
-              <span class="opt-label">11–50 lidi</span>
-              <span class="opt-check">✓</span>
-            </div>
-            <div class="opt" data-group="s4" data-val="50+ lidi">
-              <span class="opt-label">50+ lidi</span>
-              <span class="opt-check">✓</span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group">
-          <label>Cokoliv dalsiho, co chces rict (nepovinne)</label>
-          <textarea id="f_pozn" placeholder="Napr. jakou AI uz pouzivas, co nejvice chces zautomatizovat, specificke pozadavky..."></textarea>
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goBack(4)">Zpet</button>
-          <div style="display:flex;align-items:center;gap:24px;">
-            <span class="step-count">4 z 5</span>
-            <button class="btn-next" onclick="goNext(4)">Pokracovat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 5: Kontakt -->
-      <div class="step" id="step5">
-        <div class="step-num">Krok 5</div>
-        <h3>Jak se s tebou spojime?</h3>
-        <p class="step-sub">Zadej kontakt — ozveme se do 24 hodin.</p>
-        <div class="input-group">
-          <label>Jmeno</label>
-          <input type="text" id="f_jmeno" placeholder="Tve jmeno">
-        </div>
-        <div class="input-group">
-          <label>Telefon nebo e-mail</label>
-          <input type="text" id="f_kontakt" placeholder="Napr. +420 123 456 789 nebo jmeno@firma.cz">
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goBack(5)">Zpet</button>
-          <div style="display:flex;align-items:center;gap:24px;">
-            <span class="step-count">5 z 5</span>
-            <button class="btn-next" onclick="showSummary()">Zobrazit shrnuti</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 6: Summary -->
-      <div class="step" id="step6">
-        <div class="step-num">Shrnuti brifu</div>
-        <h3>Jeste jednou zkontroluj<br>tve odpovedi</h3>
-        <p class="step-sub" style="margin-bottom:28px;">Vsechno spravne? Pak jen odeslat a my se ti ozveme.</p>
-        <div class="summary-box" id="summaryBox"></div>
-        <a id="sendLink" href="#" class="btn-send" onclick="sendBrief(event)">Odeslat brief — chci vlastni AI ekosystem</a>
-        <p style="text-align:center;font-size:12px;color:var(--text3);margin-top:16px;">
-          Otevre se tvuj e-mailovy klient s predvyplnenou zpravou. Nebo nas kontaktuj primo.<br>
-          Bez zavazku. Pouze prvni krok ke spolecnemu rozhovoru.
-        </p>
-        <div style="margin-top:24px;">
-          <button class="btn-back" onclick="goBack(6)" style="font-size:13px;">Zpet a upravit</button>
-        </div>
-      </div>
-
-      <!-- STEP 7: Thank you -->
-      <div class="step" id="step7">
-        <div class="thank-you">
-          <div class="check-big">✓</div>
-          <h3>Diky — brief odoslan!</h3>
-          <p>Ozveme se ti do 24 hodin. Mezitim nas muzes kontaktovat primo:</p>
-          <div style="display:flex;flex-direction:column;gap:12px;align-items:center;margin-bottom:32px;">
-            <a href="tel:+420736671943" class="contact-link" style="font-size:16px;">📞 736 671 943</a>
-            <a href="mailto:ai.thor.ekosystem@gmail.com" class="contact-link" style="font-size:16px;">✉️ ai.thor.ekosystem@gmail.com</a>
-          </div>
-          <button class="btn-next" onclick="resetForm()" style="margin:0 auto;display:block;">Vyplnit znovu</button>
-        </div>
-      </div>
-
-    </div><!-- /brief-box -->
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-section" id="kontakt">
-  <div class="section-wrap">
-    <div class="contact-grid">
-      <div class="contact-info">
-        <h2>Zacneme<br>rozhovorem.</h2>
-        <p>Nemas cas na dlouhe prezentace? Staci kratka konzultace po telefonu nebo rychla zprava. Spolu zjistime, co by pro tebe davalo smysl.</p>
-        <div class="contact-links">
-          <a href="tel:+420736671943" class="contact-link">
-            <span class="contact-link-icon">📞</span>
-            736 671 943
-          </a>
-          <a href="mailto:ai.thor.ekosystem@gmail.com" class="contact-link">
-            <span class="contact-link-icon">✉️</span>
-            ai.thor.ekosystem@gmail.com
-          </a>
-          <div class="contact-link">
-            <span class="contact-link-icon">👤</span>
-            Michal / Thor | AI THOR
-          </div>
-        </div>
-      </div>
-      <div class="contact-box">
-        <h3>Chces si nejdriv<br>overit, jestli to ma smysl?</h3>
-        <p>Posli nam kratky brief pres formular vyse. Nebo se ozveme telefonicky — bez skriptu, bez tlaku. Jen uprimny rozhovor o tve situaci.</p>
-        <a href="#brief" class="btn-primary" style="display:inline-block;">Vyplnit brief</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <strong>AI THOR</strong> &nbsp;|&nbsp; Michal Kausek &nbsp;|&nbsp; ai.thor.ekosystem@gmail.com &nbsp;|&nbsp; 736 671 943<br>
-  <span style="font-size:11px;margin-top:8px;display:block;">Hybridni AI ekosystem na miru pro podnikatele &amp; tymy</span>
-</footer>
-
-<script>
-  const state = {
-    s1: null,   // role
-    s2: [],     // vyzvy
-    s3: [],     // agenti
-    s4: null,   // velikost
-    obor: '',
-    pozn: '',
-    jmeno: '',
-    kontakt: ''
-  };
-
-  let currentStep = 1;
-  const TOTAL = 5;
-
-  // single-select options
-  document.querySelectorAll('.opt:not(.multi)').forEach(opt => {
-    opt.addEventListener('click', function() {
-      const group = this.dataset.group;
-      document.querySelectorAll(`.opt[data-group="${group}"]`).forEach(o => o.classList.remove('selected'));
-      this.classList.add('selected');
-      if (group === 's1') state.s1 = this.dataset.val;
-      if (group === 's4') state.s4 = this.dataset.val;
-    });
-  });
-
-  // multi-select options
-  document.querySelectorAll('.opt.multi').forEach(opt => {
-    opt.addEventListener('click', function() {
-      this.classList.toggle('selected');
-      const group = this.dataset.group;
-      const val = this.dataset.val;
-      const arr = group === 's2' ? state.s2 : state.s3;
-      const idx = arr.indexOf(val);
-      if (idx === -1) arr.push(val);
-      else arr.splice(idx, 1);
-    });
-  });
-
-  function updateProgress(step) {
-    const labels = document.querySelectorAll('.progress-step');
-    labels.forEach((el, i) => {
-      el.classList.remove('active', 'done');
-      if (i + 1 < step) el.classList.add('done');
-      else if (i + 1 === step) el.classList.add('active');
-    });
-    document.getElementById('progressLabel').textContent = (step <= TOTAL ? step : TOTAL) + ' / ' + TOTAL;
-  }
-
-  function showStep(n) {
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step' + n).classList.add('active');
-    currentStep = n;
-    if (n <= TOTAL) updateProgress(n);
-    // hide progress on summary/thanks
-    const pBar = document.querySelector('.progress-bar').parentElement;
-    pBar.style.display = (n > TOTAL) ? 'none' : 'flex';
-  }
-
-  function goNext(from) {
-    if (from === 1 && !state.s1) { alert('Prosim vyberte jednu moznost.'); return; }
-    if (from === 2 && state.s2.length === 0) { alert('Prosim vyberte alespon jednu oblast.'); return; }
-    if (from === 3 && state.s3.length === 0) { alert('Prosim vyberte alespon jednoho agenta.'); return; }
-    if (from === 4) {
-      state.obor = document.getElementById('f_obor').value.trim();
-      if (!state.s4) { alert('Prosim vyberte velikost firmy.'); return; }
-    }
-    if (from === 5) { showSummary(); return; }
-    showStep(from + 1);
-  }
-
-  function goBack(from) {
-    showStep(from - 1);
-  }
-
-  function showSummary() {
-    state.jmeno = document.getElementById('f_jmeno').value.trim();
-    state.kontakt = document.getElementById('f_kontakt').value.trim();
-    state.pozn = document.getElementById('f_pozn').value.trim();
-    if (!state.jmeno || !state.kontakt) {
-      alert('Prosim vyplnte jmeno a kontakt.'); return;
-    }
-    const box = document.getElementById('summaryBox');
-    box.innerHTML = `
-      <div class="summary-row"><span class="summary-key">Role:</span><span class="summary-val">${state.s1 || '—'}</span></div>
-      <div class="summary-row"><span class="summary-key">Hlavni vyzvy:</span><span class="summary-val">${state.s2.join(', ') || '—'}</span></div>
-      <div class="summary-row"><span class="summary-key">Zajimaji agenti:</span><span class="summary-val">${state.s3.join(', ') || '—'}</span></div>
-      <div class="summary-row"><span class="summary-key">Obor:</span><span class="summary-val">${state.obor || '—'}</span></div>
-      <div class="summary-row"><span class="summary-key">Velikost firmy:</span><span class="summary-val">${state.s4 || '—'}</span></div>
-      ${state.pozn ? `<div class="summary-row"><span class="summary-key">Poznamka:</span><span class="summary-val">${state.pozn}</span></div>` : ''}
-      <div class="summary-row"><span class="summary-key">Jmeno:</span><span class="summary-val">${state.jmeno}</span></div>
-      <div class="summary-row"><span class="summary-key">Kontakt:</span><span class="summary-val">${state.kontakt}</span></div>
-    `;
-    showStep(6);
-  }
-
-  function sendBrief(e) {
-    e.preventDefault();
-    const body = `AI THOR — Brief od klienta
-================================
-Jmeno: ${state.jmeno}
-Kontakt: ${state.kontakt}
-
-Role: ${state.s1}
-Obor: ${state.obor || '—'}
-Velikost firmy: ${state.s4}
-
-Hlavni vyzvy:
-${state.s2.map(v => '- ' + v).join('\n')}
-
-Zajimave oblasti / agenti:
-${state.s3.map(v => '- ' + v).join('\n')}
-
-Poznamka:
-${state.pozn || '—'}
-================================
-Odesilano pres: hybridni-ai-ekosystem landing page`;
-
-    const subject = encodeURIComponent(`AI THOR Brief — ${state.jmeno}`);
-    const bodyEnc = encodeURIComponent(body);
-    window.location.href = `mailto:ai.thor.ekosystem@gmail.com?subject=${subject}&body=${bodyEnc}`;
-    setTimeout(() => showStep(7), 800);
-  }
-
-  function resetForm() {
-    state.s1 = null; state.s2 = []; state.s3 = []; state.s4 = null;
-    state.obor = ''; state.pozn = ''; state.jmeno = ''; state.kontakt = '';
-    document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
-    document.getElementById('f_obor').value = '';
-    document.getElementById('f_pozn').value = '';
-    document.getElementById('f_jmeno').value = '';
-    document.getElementById('f_kontakt').value = '';
-    showStep(1);
-    document.querySelector('.progress-bar').parentElement.style.display = 'flex';
-  }
-</script>
 </body>
 </html>
