@@ -3,14 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hybridní AI Ekosystém</title>
+  <title>AI THOR — Hybridní AI ekosystém pro podnikatele</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cyan: #00c8ff;
+      --cyan-dim: rgba(0,200,255,0.15);
+      --cyan-border: rgba(0,200,255,0.3);
+      --bg: #050a15;
+      --bg2: #080f1e;
+      --text: #e8f4ff;
+      --text-dim: #8aa8c8;
+    }
     body {
-      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #050a15;
-      color: #e8f4ff;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.7;
     }
     body::before {
@@ -18,13 +27,14 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(0,200,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.025) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
       z-index: 0;
     }
-    section, .diff-section > section, .section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -32,476 +42,1058 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 60px 20px;
-      background: radial-gradient(ellipse at 50% 0%, #0a1e35 0%, #050a15 70%);
+      padding: 80px 20px;
+      background: radial-gradient(ellipse at 50% -10%, #0a2040 0%, var(--bg) 65%);
       position: relative;
       z-index: 1;
     }
-    .badge {
+    .hero-badge {
       display: inline-block;
-      background: rgba(0, 200, 255, 0.12);
-      border: 1px solid rgba(0, 200, 255, 0.35);
-      color: #00c8ff;
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: 20px;
-      margin-bottom: 28px;
-    }
-    h1 {
-      font-size: clamp(36px, 7vw, 80px);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 28px;
-      letter-spacing: -1px;
-    }
-    h1 span {
-      background: linear-gradient(135deg, #00c8ff, #0077b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .subtitle {
-      font-size: clamp(17px, 2.5vw, 22px);
-      color: #8ab4cc;
-      max-width: 620px;
-      margin-bottom: 48px;
-    }
-    .cta-group {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #0077b6, #00c8ff);
-      color: #050a15;
-      padding: 16px 36px;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-secondary {
-      background: transparent;
-      color: #00c8ff;
-      border: 1px solid rgba(0, 200, 255, 0.35);
-      padding: 16px 36px;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .btn-secondary:hover { background: rgba(0, 200, 255, 0.1); }
-
-    /* PROBLEM */
-    .section {
-      padding: 100px 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .section-label {
+      background: var(--cyan-dim);
+      border: 1px solid var(--cyan-border);
+      color: var(--cyan);
       font-size: 12px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: #00c8ff;
-      margin-bottom: 16px;
-    }
-    .section h2 {
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 700;
-      margin-bottom: 24px;
-      letter-spacing: -0.5px;
-    }
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin-top: 48px;
-    }
-    .problem-card {
-      background: rgba(0, 200, 255, 0.03);
-      border: 1px solid rgba(0, 200, 255, 0.1);
-      border-radius: 14px;
-      padding: 28px;
-    }
-    .problem-card .icon {
-      font-size: 28px;
-      margin-bottom: 14px;
-    }
-    .problem-card h3 {
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    .problem-card p {
-      font-size: 15px;
-      color: #5a8aaa;
-    }
-
-    /* ROZDIL */
-    .diff-section {
-      background: rgba(0, 200, 255, 0.02);
-      border-top: 1px solid rgba(0, 200, 255, 0.08);
-      border-bottom: 1px solid rgba(0, 200, 255, 0.08);
-    }
-    .diff-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-top: 48px;
-    }
-    @media (max-width: 640px) { .diff-grid { grid-template-columns: 1fr; } }
-    .diff-col {
-      border-radius: 14px;
-      padding: 32px;
-    }
-    .diff-col.old {
-      background: rgba(255,60,60,0.05);
-      border: 1px solid rgba(255,60,60,0.15);
-    }
-    .diff-col.new {
-      background: rgba(0, 200, 255, 0.06);
-      border: 1px solid rgba(0, 200, 255, 0.25);
-    }
-    .diff-col h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    .diff-col.old h3 { color: #f87171; }
-    .diff-col.new h3 { color: #00c8ff; }
-    .diff-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .diff-col li {
-      font-size: 15px;
-      color: #7090a8;
-      padding-left: 22px;
-      position: relative;
-    }
-    .diff-col.old li::before { content: '✗'; position: absolute; left: 0; color: #f87171; }
-    .diff-col.new li::before { content: '✓'; position: absolute; left: 0; color: #00c8ff; }
-
-    /* FEATURES */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
-      margin-top: 48px;
-    }
-    .feature-card {
-      background: rgba(0, 200, 255, 0.03);
-      border: 1px solid rgba(0, 200, 255, 0.1);
-      border-radius: 14px;
-      padding: 32px;
-      transition: border-color 0.2s;
-    }
-    .feature-card:hover { border-color: rgba(0, 200, 255, 0.35); }
-    .feature-card .icon {
-      font-size: 32px;
-      margin-bottom: 16px;
-    }
-    .feature-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .feature-card p {
-      font-size: 15px;
-      color: #5a8aaa;
-    }
-
-    /* PRICING */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      margin-top: 48px;
-    }
-    .price-card {
-      background: rgba(0, 200, 255, 0.03);
-      border: 1px solid rgba(0, 200, 255, 0.1);
-      border-radius: 14px;
-      padding: 36px;
-      text-align: center;
-    }
-    .price-card.featured {
-      background: rgba(0, 200, 255, 0.08);
-      border-color: rgba(0, 200, 255, 0.4);
-      position: relative;
-    }
-    .featured-badge {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #0077b6, #00c8ff);
-      color: #050a15;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 4px 16px;
+      padding: 6px 20px;
       border-radius: 20px;
-    }
-    .price-card h3 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    .price-card .price {
-      font-size: 42px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #00c8ff, #0077b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 4px;
-    }
-    .price-card .price-note {
-      font-size: 13px;
-      color: #3a6a88;
-      margin-bottom: 24px;
-    }
-    .price-card ul {
-      list-style: none;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
       margin-bottom: 32px;
     }
-    .price-card li {
-      font-size: 15px;
-      color: #7090a8;
-      padding-left: 22px;
-      position: relative;
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
     }
-    .price-card li::before { content: '✓'; position: absolute; left: 0; color: #00c8ff; }
-    .price-card a {
+    .hero h1 .brand {
+      background: linear-gradient(90deg, #fff 40%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero h1 .sub {
       display: block;
-      text-align: center;
-      padding: 13px 24px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
+      font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+      font-weight: 400;
+      color: var(--text-dim);
+      margin-top: 10px;
+      letter-spacing: 0;
+      -webkit-text-fill-color: var(--text-dim);
     }
-    .price-card.featured a {
-      background: linear-gradient(135deg, #0077b6, #00c8ff);
-      color: #050a15;
+    .hero-tagline {
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      color: var(--text-dim);
+      max-width: 560px;
+      margin: 28px auto 48px;
+    }
+    .hero-tagline strong {
+      color: var(--text);
+    }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #0090c0, #00c8ff);
+      color: #fff;
       font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 40px;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 0 30px rgba(0,200,255,0.25);
+      cursor: pointer;
+      border: none;
     }
-    .price-card:not(.featured) a {
-      border: 1px solid rgba(0, 200, 255, 0.4);
-      color: #00c8ff;
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 40px rgba(0,200,255,0.4);
     }
 
-    /* CTA FINAL */
-    .final-cta {
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 20px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
       text-align: center;
-      padding: 120px 20px;
-      background: radial-gradient(ellipse at 50% 100%, #0a1e35 0%, #050a15 70%);
+      margin-bottom: 12px;
+    }
+    .section-title .hl { color: var(--cyan); }
+    .section-desc {
+      text-align: center;
+      color: var(--text-dim);
+      max-width: 640px;
+      margin: 0 auto 56px;
+      font-size: 1.05rem;
+    }
+
+    /* ── AGENT DIAGRAM ── */
+    .agents-section { background: var(--bg2); }
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .agent-card {
+      background: rgba(0,200,255,0.04);
+      border: 1px solid var(--cyan-border);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .agent-card:hover {
+      border-color: var(--cyan);
+      background: rgba(0,200,255,0.08);
+    }
+    .agent-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .agent-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--cyan);
+      letter-spacing: 0.5px;
+    }
+    .agent-center {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+    }
+    .agent-card.center {
+      max-width: 320px;
+      background: linear-gradient(135deg, rgba(0,100,160,0.3), rgba(0,200,255,0.08));
+      border-color: var(--cyan);
+      border-width: 2px;
+    }
+    .agent-card.center .agent-name {
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    .agent-note {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ── BANNER ── */
+    .banner {
+      background: linear-gradient(135deg, rgba(0,80,130,0.6), rgba(0,200,255,0.15));
+      border: 1px solid rgba(0,200,255,0.35);
+      border-radius: 16px;
+      padding: 40px 48px;
+      text-align: center;
+      margin: 0 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .banner h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .banner p {
+      color: var(--text-dim);
+      font-size: 1rem;
+    }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(0,200,255,0.2); }
+    .feature-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* ── WHY DIFFERENT ── */
+    .why-section { background: var(--bg2); }
+    .why-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .why-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: rgba(0,200,255,0.04);
+      border: 1px solid var(--cyan-border);
+      border-radius: 10px;
+      padding: 18px 22px;
+    }
+    .why-check {
+      color: var(--cyan);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .why-item p {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    /* ── FORM ── */
+    .form-section {
+      background: radial-gradient(ellipse at 50% 50%, #081525 0%, var(--bg) 80%);
+    }
+    .form-wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--cyan-border);
+      border-radius: 16px;
+      padding: 48px;
+    }
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+    .step-label {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+    .step-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .step-sub {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 36px;
+    }
+    .form-group {
+      margin-bottom: 28px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .form-group label .note {
+      font-weight: 400;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--cyan);
+    }
+    .form-group textarea { min-height: 90px; }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      color: var(--text-dim);
+    }
+    .checkbox-group label:hover {
+      border-color: var(--cyan-border);
+      color: var(--text);
+    }
+    .checkbox-group input[type="checkbox"] {
+      accent-color: var(--cyan);
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+    .checkbox-group input[type="checkbox"]:checked + span,
+    .checkbox-group label:has(input:checked) {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+      color: var(--text);
+    }
+    .progress-bar {
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      height: 4px;
+      margin-bottom: 36px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0090c0, var(--cyan));
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .form-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 36px;
+      gap: 16px;
+    }
+    .btn-back {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text-dim);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-back:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+    .btn-next {
+      background: linear-gradient(135deg, #0090c0, var(--cyan));
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 13px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 0 20px rgba(0,200,255,0.2);
+    }
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(0,200,255,0.35);
+    }
+    .step-counter {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--bg2);
+      text-align: center;
+    }
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 36px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      color: var(--text-dim);
+    }
+    .contact-item .icon { color: var(--cyan); font-size: 1.1rem; }
+    .contact-item a { color: var(--text); text-decoration: none; }
+    .contact-item a:hover { color: var(--cyan); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      padding: 28px 20px;
+      color: var(--text-dim);
+      font-size: 0.82rem;
       position: relative;
       z-index: 1;
     }
-    .final-cta h2 {
-      font-size: clamp(28px, 5vw, 56px);
-      font-weight: 800;
-      margin-bottom: 20px;
-      letter-spacing: -0.5px;
-    }
-    .final-cta p {
-      font-size: 18px;
-      color: #5a8aaa;
-      max-width: 500px;
-      margin: 0 auto 40px;
-    }
 
-    footer {
-      text-align: center;
-      padding: 32px 20px;
-      border-top: 1px solid rgba(0, 200, 255, 0.08);
-      font-size: 14px;
-      color: #2a5a72;
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .form-wrapper { padding: 28px 20px; }
+      .banner { padding: 28px 24px; }
+      .form-nav { flex-direction: column; }
+      .btn-back, .btn-next { width: 100%; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="badge">Hybridní AI Ekosystém</div>
-    <h1>Tvuj AI partner,<br><span>ne jen nastroj</span></h1>
-    <p class="subtitle">Aktivni orchestrator, ktery myslí, jedná a pamatuje si. Pro podnikatele, kouce a konzultanty, kteri nechtejí dalsi app — ale skutecneho provozního partnera.</p>
-    <div class="cta-group">
-      <a href="#kontakt" class="btn-primary">Chci vedet vice</a>
-      <a href="#rozdil" class="btn-secondary">Jak se lisime</a>
-    </div>
-  </section>
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-badge">Hybridní AI ekosystém</div>
+  <h1>
+    <span class="brand">AI THOR</span>
+    <span class="sub">pro podnikatele</span>
+  </h1>
+  <p class="hero-tagline">
+    <strong>Zefektivněte operativu.</strong> Najděte prostor pro růst.<br>
+    Systém postavený přímo kolem vaší práce, firmy a způsobu rozhodování.
+  </p>
+  <a href="#brief" class="cta-btn">Vyplnit Business Freedom Snapshot</a>
+</section>
 
-  <!-- PROBLEM -->
-  <div style="background: rgba(0,200,255,0.02); border-top: 1px solid rgba(0,200,255,0.08); position: relative; z-index: 1;">
-    <section class="section">
-      <div class="section-label">Problem</div>
-      <h2>Vas cas riidí nastroje.<br>Melo by to byt obracene.</h2>
-      <div class="problem-grid">
-        <div class="problem-card">
-          <div class="icon">📬</div>
-          <h3>Email, ktery nespravuje sam sebe</h3>
-          <p>Cítate a tridíte rucne. Dulezite zpravy se ztracejí v sumu.</p>
-        </div>
-        <div class="problem-card">
-          <div class="icon">🗂</div>
-          <h3>Projekty bez pameti</h3>
-          <p>Kazdy novy nastroj zacína od nuly. Zadny kontext, zadna navaznost.</p>
-        </div>
-        <div class="problem-card">
-          <div class="icon">⏰</div>
-          <h3>Reaktivní rezim</h3>
-          <p>Cas trávíte reagovaním na veci misto praci na tom, co fakt záleží.</p>
-        </div>
-        <div class="problem-card">
-          <div class="icon">🧩</div>
-          <h3>Hromada nepropojenych app</h3>
-          <p>10 nastroju, 10 notifikací, nulova synchornizace.</p>
+<!-- ══════════════ AGENTI ══════════════ -->
+<section class="agents-section">
+  <div class="section-inner">
+    <h2 class="section-title">Co systém <span class="hl">zahrnuje</span></h2>
+    <p class="section-desc">Orchestrátor CEO si podle potřeby volá specializované agenty. Každý má svoji expertízu — vy zadáte záměr, systém ho provede.</p>
+    <div class="agents-grid">
+      <div class="agent-center">
+        <div class="agent-card center">
+          <div class="agent-icon">&#129504;</div>
+          <div class="agent-name">ORCHESTRÁTOR CEO</div>
+          <p class="agent-note" style="color: var(--text-dim); margin-top: 6px; font-size: 0.82rem;">Centrální koordinátor celého ekosystému</p>
         </div>
       </div>
-    </section>
+      <div class="agent-card">
+        <div class="agent-icon">&#128200;</div>
+        <div class="agent-name">ANALYTIK</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-icon">&#9822;</div>
+        <div class="agent-name">STRATÉG</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-icon">&#9999;</div>
+        <div class="agent-name">COPYWRITER</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-icon">&#127912;</div>
+        <div class="agent-name">GRAFIK</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-icon">&#128227;</div>
+        <div class="agent-name">KAMPAŇ MANAŽER</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-icon">&#128140;</div>
+        <div class="agent-name">E-MAILOVÁ KOMUNIKACE</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-icon">&#128197;</div>
+        <div class="agent-name">PLÁNOVAČ</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-icon">&#128176;</div>
+        <div class="agent-name">FINANČNÍ MANAŽER</div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- ROZDIL -->
-  <section class="section" id="rozdil">
-    <div class="section-label">Resení</div>
-    <h2>Jiné nastroje ctou a odpovídají.<br>Hybridní ekosystém jedná.</h2>
-    <div class="diff-grid">
-      <div class="diff-col old">
-        <h3>Ostatní AI nastroje</h3>
-        <ul>
-          <li>Pasivní — cekají na otázku</li>
-          <li>Bez pameti — kazdy chat od nuly</li>
-          <li>Bez akce — jen text zpet</li>
-          <li>Bez integrace — izolovaní od vaseho svetá</li>
-          <li>Chatbot logika</li>
-        </ul>
-      </div>
-      <div class="diff-col new">
-        <h3>Hybridní AI Ekosystém</h3>
-        <ul>
-          <li>Proaktivní — sleduje, reportuje, eskaluje</li>
-          <li>Trvalá pamet — zná vas kontext a historii</li>
-          <li>Reálné akce — email, kalendár, soubory, notifikace</li>
-          <li>Plná integrace — Gmail, Drive, Telegram, macOS</li>
-          <li>Operacní partner logika</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <div class="diff-section">
-    <section class="section">
-      <div class="section-label">Co umí</div>
-      <h2>Vas operacní partner<br>24 hodin denne</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="icon">🧠</div>
-          <h3>Trvalá, personalizovaná pamet</h3>
-          <p>Zná váš kontext, vaše projekty, vaše priority. Nemusíte nic opakovat.</p>
-        </div>
-        <div class="feature-card">
-          <div class="icon">📧</div>
-          <h3>Email a komunikace</h3>
-          <p>Cte, tridí, odpovídá a archivuje. Dulezité veci vám reportuje.</p>
-        </div>
-        <div class="feature-card">
-          <div class="icon">📅</div>
-          <h3>Kalendarní a projektové rízení</h3>
-          <p>Vídí, co mas naplanováno, upozorní na konflikty a navrhne resení.</p>
-        </div>
-        <div class="feature-card">
-          <div class="icon">🎙</div>
-          <h3>Hlasová komunikace</h3>
-          <p>Mluvíte, píšete, posilate hlasovky — vždy reaguje ve vašem stylu.</p>
-        </div>
-        <div class="feature-card">
-          <div class="icon">🤖</div>
-          <h3>Podrízení agenti</h3>
-          <p>Specialné agenti pro specifické úkoly — rízeni hlavním orchestrátorem.</p>
-        </div>
-        <div class="feature-card">
-          <div class="icon">🔒</div>
-          <h3>Vase data, váš provoz</h3>
-          <p>Konfigurovatelné politiky pristupu. Vy rozhodujete, co agent sme a nesmí.</p>
-        </div>
-      </div>
-    </section>
+<!-- ══════════════ BANNER ══════════════ -->
+<section style="padding: 60px 0; position: relative; z-index: 1;">
+  <div class="banner">
+    <h2>&#128640; Více času. &nbsp; Více kontroly. &nbsp; Méně placení agenturám.</h2>
+    <p style="margin-top: 16px;">S vlastním AI ekosystémem získáte náskok před konkurencí a zefektivníte operativu, kampaně i komunikaci rychleji a podle sebe.</p>
   </div>
+</section>
 
-  <!-- PRICING -->
-  <section class="section" id="pricing">
-    <div class="section-label">Modely spoluprace</div>
-    <h2>Pro kazdeho jinak —<br>podle toho, co potrebujete</h2>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Subscription</h3>
-        <div class="price">Od 4 900 Kc</div>
-        <div class="price-note">/ mesíc</div>
-        <ul>
-          <li>Pristup k ekosystemu jako sluzbe</li>
-          <li>Personalizovaná pamet a kontext</li>
-          <li>Email + Telegram integrace</li>
-          <li>Mesícní aktualizace a podpora</li>
-        </ul>
-        <a href="#kontakt">Zacít</a>
+<!-- ══════════════ VLASTNOSTI ══════════════ -->
+<section>
+  <div class="section-inner">
+    <h2 class="section-title">Klíčové <span class="hl">vlastnosti ekosystému</span></h2>
+    <p class="section-desc">Nejde o šablonu ani univerzální aplikaci. Jde o váš systém.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>HYBRIDNÍ AI EKOSYSTÉM NA MÍRU</h3>
+        <p>Postavený přímo kolem vaší práce, firmy, dokumentů, komunikace, priorit a způsobu rozhodování.</p>
       </div>
-      <div class="price-card featured">
-        <div class="featured-badge">Nejpopulárnejs</div>
-        <h3>Setup + Subscription</h3>
-        <div class="price">Od 14 900 Kc</div>
-        <div class="price-note">setup + mesícní poplatek</div>
-        <ul>
-          <li>Plná konfigurace na miru</li>
-          <li>Integrace vasich nástroju a dat</li>
-          <li>Trénink na vas kontext a projekty</li>
-          <li>Mesícní podpora a rozvoj</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="#kontakt">Chci to takhle</a>
+      <div class="feature-card">
+        <h3>PROVOZ 24/7</h3>
+        <p>Systém běží nepřetržitě. Průběžně hlídá vybrané oblasti, připravuje podklady a upozorňuje na to, co nemá zapadnout.</p>
       </div>
-      <div class="price-card">
-        <h3>Done-For-You</h3>
-        <div class="price">Od 49 900 Kc</div>
-        <div class="price-note">jednorázove</div>
-        <ul>
-          <li>Vlastní ekosystém na klic</li>
-          <li>Kompletní architektura a nasazení</li>
-          <li>White-label moznost</li>
-          <li>Zaclenení do stavajícího businessu</li>
-        </ul>
-        <a href="#kontakt">Domluvit se</a>
+      <div class="feature-card">
+        <h3>HLAVNÍ AI AGENT — CENTRÁLNÍ KOORDINÁTOR</h3>
+        <p>Drží kontext, chápe priority, propojuje informace z různých oblastí a pomáhá řídit celý ekosystém.</p>
+      </div>
+      <div class="feature-card">
+        <h3>ADAPTIVNÍ SYSTÉM</h3>
+        <p>Postupně se přizpůsobuje vaší realitě. Chápe, jak pracujete, co je pro vás důležité a co se opakuje.</p>
+      </div>
+      <div class="feature-card">
+        <h3>PROAKTIVNÍ PŘÍSTUP</h3>
+        <p>Upozorní na opakující se práci, slabé místo v procesu, nevyužitou příležitost nebo oblast, kterou by šlo zrychlit.</p>
+      </div>
+      <div class="feature-card">
+        <h3>ZACHOVÁNÍ PAMĚTI SYSTÉMU</h3>
+        <p>Systém si drží kontext, pravidla, pracovní návyky a historii. Při změně zařízení se nezačíná od nuly.</p>
+      </div>
+      <div class="feature-card">
+        <h3>SYSTÉM ROSTE S VÁMI</h3>
+        <p>Začne jako osobní vrstva a rozšiřuje se o další funkce, agenty, oblasti firmy nebo vybrané zaměstnance.</p>
+      </div>
+      <div class="feature-card">
+        <h3>KONTROLA PŘÍSTUPU PRO TÝM</h3>
+        <p>Bezpečně zpřístupnitelné vybraným lidem ve firmě. Kontrolovaně podle rolí — rozhodnutí o přístupu zůstává na vás.</p>
+      </div>
+      <div class="feature-card">
+        <h3>PŘENOSITELNÉ ŘEŠENÍ</h3>
+        <p>Systém není závislý na jednom zařízení. Lze ho přenést, obnovit nebo rozšířit podle potřeby.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FINAL CTA -->
-  <section class="final-cta" id="kontakt">
-    <h2>Pripraveni mít AI partnera,<br>ne jen chatbota?</h2>
-    <p>Napiste nam a domluvíme si 30minutový hovor. Bez závazku, bez omáčky.</p>
-    <a href="mailto:ai.thor.ekosystem@gmail.com" class="btn-primary" style="display:inline-block;">Napsat zprávu</a>
-  </section>
+<!-- ══════════════ PROČ JE TO JINÉ ══════════════ -->
+<section class="why-section">
+  <div class="section-inner">
+    <h2 class="section-title">Proč je to <span class="hl">jiné</span></h2>
+    <p class="section-desc">Systém běží ve vašem prostředí — ne v cizím cloudu.</p>
+    <div class="why-list">
+      <div class="why-item">
+        <span class="why-check">&#10003;</span>
+        <p>Bezpečné lokální prostředí vašeho počítače — ne v cloudu</p>
+      </div>
+      <div class="why-item">
+        <span class="why-check">&#10003;</span>
+        <p>Paměť se neztrácí a zůstává bezpečně uložená na vašem zařízení</p>
+      </div>
+      <div class="why-item">
+        <span class="why-check">&#10003;</span>
+        <p>Může běžet 24/7 na Mac mini — bez vaší přítomnosti</p>
+      </div>
+      <div class="why-item">
+        <span class="why-check">&#10003;</span>
+        <p>Běží na základním předplatném od Anthropicu — žádné skryté náklady</p>
+      </div>
+      <div class="why-item">
+        <span class="why-check">&#10003;</span>
+        <p>Nezávislost na jednom poskytovateli AI — systém lze přizpůsobit</p>
+      </div>
+      <div class="why-item">
+        <span class="why-check">&#10003;</span>
+        <p>Napojí se na systémy, které už ve firmě používáte</p>
+      </div>
+      <div class="why-item">
+        <span class="why-check">&#10003;</span>
+        <p>Bezpečné zálohy celého ekosystému včetně agentů a jejich paměti</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    &copy; 2026 AI THOR — Hybridní AI Ekosystém | Michal / Thor | ai.thor.ekosystem@gmail.com | 736 671 943
-  </footer>
+<!-- ══════════════ BRIEF — MULTISTEP FORM ══════════════ -->
+<section class="form-section" id="brief">
+  <div class="section-inner">
+    <h2 class="section-title">Business Freedom <span class="hl">Snapshot</span></h2>
+    <p class="section-desc">Kde vám dnes utíká čas, který by měla dělat AI?<br><em style="font-size: 0.88rem;">"Jak dostat firmu na další level, aniž bych se z toho zbláznil."</em></p>
+
+    <div class="form-wrapper">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 14%"></div>
+      </div>
+
+      <!-- KROK 1 — O vaší firmě -->
+      <div class="form-step active" id="step-1">
+        <div class="step-label">Krok 1 / 7</div>
+        <div class="step-title">O vaší firmě</div>
+        <div class="step-sub">Začneme základními informacemi o vás a vaší firmě.</div>
+
+        <div class="form-group">
+          <label>Obor podnikání</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="obor" value="IT a technologie"><span>IT a technologie</span></label>
+            <label><input type="checkbox" name="obor" value="Obchod a prodej"><span>Obchod a prodej</span></label>
+            <label><input type="checkbox" name="obor" value="Marketing a reklama"><span>Marketing a reklama</span></label>
+            <label><input type="checkbox" name="obor" value="Realitní trh"><span>Realitní trh</span></label>
+            <label><input type="checkbox" name="obor" value="Výroba a průmysl"><span>Výroba a průmysl</span></label>
+            <label><input type="checkbox" name="obor" value="Zdravotnictví"><span>Zdravotnictví</span></label>
+            <label><input type="checkbox" name="obor" value="Finance a účetnictví"><span>Finance a účetnictví</span></label>
+            <label><input type="checkbox" name="obor" value="Stavebnictví"><span>Stavebnictví</span></label>
+            <label><input type="checkbox" name="obor" value="E-commerce"><span>E-commerce</span></label>
+            <label><input type="checkbox" name="obor" value="Coaching a vzdělávání"><span>Coaching a vzdělávání</span></label>
+            <label><input type="checkbox" name="obor" value="Pohostinství a cestovní ruch"><span>Pohostinství</span></label>
+          </div>
+          <input type="text" name="obor_jine" placeholder="Jiný obor..." style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+          <label>Velikost firmy</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="velikost" value="Živnostník / OSVČ"><span>Živnostník / OSVČ</span></label>
+            <label><input type="checkbox" name="velikost" value="Malá firma (2–10 lidí)"><span>Malá (2–10 lidí)</span></label>
+            <label><input type="checkbox" name="velikost" value="Střední firma (11–50 lidí)"><span>Střední (11–50 lidí)</span></label>
+            <label><input type="checkbox" name="velikost" value="Velká firma (50+ lidí)"><span>Velká (50+)</span></label>
+            <label><input type="checkbox" name="velikost" value="Mezinárodní firma"><span>Mezinárodní</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Počet lidí ve firmě</label>
+          <input type="text" name="pocet_lidi" placeholder="Např. 12">
+        </div>
+
+        <div class="form-group">
+          <label>Roční obrat <span class="note">(nepovinné)</span></label>
+          <input type="text" name="obrat" placeholder="Např. 5 mil. Kč">
+        </div>
+
+        <div class="form-group">
+          <label>Hlavní produkty / služby</label>
+          <textarea name="produkty" placeholder="Stručně popište, co nabízíte..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Web <span class="note">(nepovinné)</span></label>
+          <input type="text" name="web" placeholder="www.vasefirma.cz">
+        </div>
+
+        <div class="form-nav">
+          <span class="step-counter">1 / 7</span>
+          <button class="btn-next" onclick="goNext(1)">Další &#8594;</button>
+        </div>
+      </div>
+
+      <!-- KROK 2 — Jak firma vydělává -->
+      <div class="form-step" id="step-2">
+        <div class="step-label">Krok 2 / 7</div>
+        <div class="step-title">Jak firma vydělává peníze</div>
+        <div class="step-sub">Tohle je klíčové pro návrh agentů přesně na míru vaší firmě.</div>
+
+        <div class="form-group">
+          <label>Co přesně prodáváte?</label>
+          <textarea name="co_prodavate" placeholder="Popište produkty, služby nebo kombinaci..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Kdo je váš ideální klient?</label>
+          <textarea name="ideal_klient" placeholder="Typický zákazník — kdo je, co řeší, co od vás kupuje..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Jak dnes získáváte nové zákazníky?</label>
+          <textarea name="ziskavani" placeholder="Doporučení, reklama, SEO, LinkedIn, cold outreach..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Jak probíhá cesta zákazníka od prvního kontaktu po zaplacení?</label>
+          <textarea name="cesta_zakaznika" placeholder="Stručně popište kroky procesu..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Která část procesu je nejvíce závislá na konkrétních lidech?</label>
+          <textarea name="zavisla_cast" placeholder="Kde by se vše zastavilo, kdyby odešel klíčový člověk?"></textarea>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goBack(2)">&#8592; Zpět</button>
+          <span class="step-counter">2 / 7</span>
+          <button class="btn-next" onclick="goNext(2)">Další &#8594;</button>
+        </div>
+      </div>
+
+      <!-- KROK 3 — Kde mizí čas -->
+      <div class="form-step" id="step-3">
+        <div class="step-label">Krok 3 / 7</div>
+        <div class="step-title">Kde vám dnes mizí čas</div>
+        <div class="step-sub">Pojmenujme, co vám bere energii a co by AI měla převzít.</div>
+
+        <div class="form-group">
+          <label>Kde osobně trávíte nejvíce času?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="cas" value="Emaily"><span>Emaily</span></label>
+            <label><input type="checkbox" name="cas" value="Schůzky"><span>Schůzky</span></label>
+            <label><input type="checkbox" name="cas" value="Administrativa"><span>Administrativa</span></label>
+            <label><input type="checkbox" name="cas" value="Reporting"><span>Reporting</span></label>
+            <label><input type="checkbox" name="cas" value="Obchod"><span>Obchod</span></label>
+            <label><input type="checkbox" name="cas" value="Marketing"><span>Marketing</span></label>
+            <label><input type="checkbox" name="cas" value="Koordinace týmu"><span>Koordinace týmu</span></label>
+            <label><input type="checkbox" name="cas" value="Zákaznická podpora"><span>Zákaznická podpora</span></label>
+          </div>
+          <input type="text" name="cas_jine" placeholder="Jiné..." style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+          <label>Které činnosti vás nejvíce vysávají?</label>
+          <textarea name="vysavani" placeholder="Co vám bere energii i přesto, že to děláte znovu a znovu..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Jaké úkoly se opakují každý týden stále dokola?</label>
+          <textarea name="opakovani" placeholder="Reporty, e-maily, přípravy podkladů, schůzky..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Co byste nejraději přestal/a dělat už zítra?</label>
+          <textarea name="prestat" placeholder="Bez filtrů — co vás unavuje nebo zdržuje..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Co musíte mít neustále v hlavě, aby firma fungovala?</label>
+          <textarea name="v_hlave" placeholder="Co závisí jen na vás a nikoho jiného..."></textarea>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goBack(3)">&#8592; Zpět</button>
+          <span class="step-counter">3 / 7</span>
+          <button class="btn-next" onclick="goNext(3)">Další &#8594;</button>
+        </div>
+      </div>
+
+      <!-- KROK 4 — Kde mizí peníze -->
+      <div class="form-step" id="step-4">
+        <div class="step-label">Krok 4 / 7</div>
+        <div class="step-title">Kde vám dnes mizí peníze</div>
+        <div class="step-sub">Pojmenujme, kde firma ztrácí — aniž byste si to možná uvědomovali.</div>
+
+        <div class="form-group">
+          <label>Kde podle vás firma nejvíce ztrácí peníze?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="penize" value="Neefektivní procesy"><span>Neefektivní procesy</span></label>
+            <label><input type="checkbox" name="penize" value="Pomalé reakce"><span>Pomalé reakce</span></label>
+            <label><input type="checkbox" name="penize" value="Ztracené leady"><span>Ztracené leady</span></label>
+            <label><input type="checkbox" name="penize" value="Chybovost"><span>Chybovost</span></label>
+            <label><input type="checkbox" name="penize" value="Přetížení lidí"><span>Přetížení lidí</span></label>
+            <label><input type="checkbox" name="penize" value="Špatný reporting"><span>Špatný reporting</span></label>
+            <label><input type="checkbox" name="penize" value="Nevyužitá data"><span>Nevyužitá data</span></label>
+          </div>
+          <input type="text" name="penize_jine" placeholder="Jiné..." style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+          <label>Jaký problém vás dnes stojí nejvíce energie nebo peněz?</label>
+          <textarea name="klic_problem" placeholder="Jeden klíčový problém, který se vám vrací..."></textarea>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goBack(4)">&#8592; Zpět</button>
+          <span class="step-counter">4 / 7</span>
+          <button class="btn-next" onclick="goNext(4)">Další &#8594;</button>
+        </div>
+      </div>
+
+      <!-- KROK 5 — Role majitele -->
+      <div class="form-step" id="step-5">
+        <div class="step-label">Krok 5 / 7</div>
+        <div class="step-title">Role majitele ve firmě</div>
+        <div class="step-sub">Kde jste nenahraditelní — a kde byste být nemuseli?</div>
+
+        <div class="form-group">
+          <label>Co musí projít přes vás?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="pres_vas" value="Schválení"><span>Schválení</span></label>
+            <label><input type="checkbox" name="pres_vas" value="Nabídky"><span>Nabídky</span></label>
+            <label><input type="checkbox" name="pres_vas" value="Obchod"><span>Obchod</span></label>
+            <label><input type="checkbox" name="pres_vas" value="Finance"><span>Finance</span></label>
+            <label><input type="checkbox" name="pres_vas" value="Nábor"><span>Nábor</span></label>
+            <label><input type="checkbox" name="pres_vas" value="Marketing"><span>Marketing</span></label>
+            <label><input type="checkbox" name="pres_vas" value="Strategická rozhodnutí"><span>Strategická rozhodnutí</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Kde by se firma zastavila, kdybyste byl/a 14 dní offline?</label>
+          <textarea name="offline" placeholder="Co by se zaseklo nebo přestalo fungovat..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Máte pocit, že řídíte firmu vy, nebo firma řídí vás?</label>
+          <textarea name="kdo_ridi" placeholder="Upřímná odpověď — bez filtrů..."></textarea>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goBack(5)">&#8592; Zpět</button>
+          <span class="step-counter">5 / 7</span>
+          <button class="btn-next" onclick="goNext(5)">Další &#8594;</button>
+        </div>
+      </div>
+
+      <!-- KROK 6 — AI a automatizace -->
+      <div class="form-step" id="step-6">
+        <div class="step-label">Krok 6 / 7</div>
+        <div class="step-title">AI a automatizace dnes</div>
+        <div class="step-sub">Kde jste s AI teď — a kam chcete jít.</div>
+
+        <div class="form-group">
+          <label>Jak dnes používáte AI?</label>
+          <textarea name="ai_dnes" placeholder="ChatGPT, Notion AI, jiné nástroje..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Kde už dnes AI pomáhá?</label>
+          <textarea name="ai_pomaha" placeholder="Konkrétní oblasti, kde AI šetří čas nebo peníze..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Kde byste chtěli AI využít více?</label>
+          <textarea name="ai_vice" placeholder="Co by bylo ideální automatizovat nebo delegovat na AI..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Kdyby AI převzala jednu část firmy, která by to byla?</label>
+          <textarea name="ai_cast" placeholder="Jedna oblast, která by vám nejvíce ulevila..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Čeho se naopak obáváte?</label>
+          <textarea name="obavy" placeholder="Bezpečnost dat, ztráta kontroly, závislost na technologii..."></textarea>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goBack(6)">&#8592; Zpět</button>
+          <span class="step-counter">6 / 7</span>
+          <button class="btn-next" onclick="goNext(6)">Další &#8594;</button>
+        </div>
+      </div>
+
+      <!-- KROK 7 — Kam chcete dojít -->
+      <div class="form-step" id="step-7">
+        <div class="step-label">Krok 7 / 7</div>
+        <div class="step-title">Kam chcete firmu a sebe dostat za 12 měsíců</div>
+        <div class="step-sub">Popište svůj ideální stav — tím začínáte navrhovat svůj budoucí AI ekosystém.</div>
+
+        <div class="form-group">
+          <label>Co chcete během 12 měsíců vybudovat?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="cile" value="Nový produkt"><span>Nový produkt</span></label>
+            <label><input type="checkbox" name="cile" value="Nový trh"><span>Nový trh</span></label>
+            <label><input type="checkbox" name="cile" value="Expanze"><span>Expanze</span></label>
+            <label><input type="checkbox" name="cile" value="Více klientů"><span>Více klientů</span></label>
+            <label><input type="checkbox" name="cile" value="Vyšší zisk"><span>Vyšší zisk</span></label>
+            <label><input type="checkbox" name="cile" value="Více volného času"><span>Více volného času</span></label>
+            <label><input type="checkbox" name="cile" value="Automatizace"><span>Automatizace</span></label>
+          </div>
+          <input type="text" name="cile_jine" placeholder="Jiné..." style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+          <label>Co vám dnes nejvíce brání se tam dostat?</label>
+          <textarea name="prekazky" placeholder="Čas, lidi, peníze, informace, strach..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Představte si květen 2027 — firma funguje přesně tak, jak chcete. Co je jinak než dnes?</label>
+          <textarea name="vize_2027" placeholder="Popište svůj ideální stav..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Co za vás dnes dělá AI nebo automatizace?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="ai_dela" value="Administrativa"><span>Administrativa</span></label>
+            <label><input type="checkbox" name="ai_dela" value="Emaily"><span>Emaily</span></label>
+            <label><input type="checkbox" name="ai_dela" value="Reporting"><span>Reporting</span></label>
+            <label><input type="checkbox" name="ai_dela" value="Operativa"><span>Operativa</span></label>
+            <label><input type="checkbox" name="ai_dela" value="Kontrola týmu"><span>Kontrola týmu</span></label>
+            <label><input type="checkbox" name="ai_dela" value="Koordinace projektů"><span>Koordinace projektů</span></label>
+            <label><input type="checkbox" name="ai_dela" value="Zákaznická podpora"><span>Zákaznická podpora</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Na co máte konečně čas?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="volny_cas" value="Růst firmy"><span>Růst firmy</span></label>
+            <label><input type="checkbox" name="volny_cas" value="Strategie"><span>Strategie</span></label>
+            <label><input type="checkbox" name="volny_cas" value="Obchod"><span>Obchod</span></label>
+            <label><input type="checkbox" name="volny_cas" value="Produktový rozvoj"><span>Produktový rozvoj</span></label>
+            <label><input type="checkbox" name="volny_cas" value="Rodina"><span>Rodina</span></label>
+            <label><input type="checkbox" name="volny_cas" value="Zdraví"><span>Zdraví</span></label>
+            <label><input type="checkbox" name="volny_cas" value="Cestování"><span>Cestování</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Co by muselo nastat, abyste si za 12 měsíců řekl/a: <em>"Tohle byla jedna z nejlepších investic, které jsem pro firmu udělal/a."</em></label>
+          <textarea name="investice" placeholder="Konkrétní výsledek, který by vás přesvědčil..."></textarea>
+        </div>
+
+        <div class="form-group" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; margin-top: 8px;">
+          <label>Vaše jméno</label>
+          <input type="text" name="jmeno" placeholder="Jméno a příjmení">
+        </div>
+
+        <div class="form-group">
+          <label>Telefon</label>
+          <input type="tel" name="telefon" placeholder="+420 xxx xxx xxx">
+        </div>
+
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" name="email_kontakt" placeholder="vas@email.cz">
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goBack(7)">&#8592; Zpět</button>
+          <span class="step-counter">7 / 7</span>
+          <button class="btn-next" onclick="submitForm()" style="background: linear-gradient(135deg, #0090c0, #00c8ff);">Odeslat snapshot &#128640;</button>
+        </div>
+      </div>
+
+    </div><!-- /.form-wrapper -->
+  </div>
+</section>
+
+<!-- ══════════════ KONTAKT ══════════════ -->
+<section class="contact-section">
+  <div class="section-inner">
+    <h2 class="section-title">Kontakt</h2>
+    <p class="section-desc">Máte otázku? Napište nebo zavolejte.</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <span class="icon">&#128222;</span>
+        <a href="tel:+420736671943">736 671 943</a>
+      </div>
+      <div class="contact-item">
+        <span class="icon">&#9993;</span>
+        <a href="mailto:ai.thor.ekosystem@gmail.com">ai.thor.ekosystem@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="icon">&#128100;</span>
+        <span>Michal / Thor &nbsp;|&nbsp; AI THOR</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 AI THOR &nbsp;&mdash;&nbsp; Hybridní AI ekosystém pro podnikatele
+</footer>
+
+<script>
+  const TOTAL_STEPS = 7;
+
+  function updateProgress(step) {
+    const pct = Math.round((step / TOTAL_STEPS) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function goNext(current) {
+    document.getElementById('step-' + current).classList.remove('active');
+    const next = current + 1;
+    document.getElementById('step-' + next).classList.add('active');
+    updateProgress(next);
+    window.scrollTo({ top: document.getElementById('brief').offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function goBack(current) {
+    document.getElementById('step-' + current).classList.remove('active');
+    const prev = current - 1;
+    document.getElementById('step-' + prev).classList.add('active');
+    updateProgress(prev);
+    window.scrollTo({ top: document.getElementById('brief').offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function getChecked(name) {
+    return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked'))
+      .map(el => el.value).join(', ');
+  }
+
+  function getVal(name) {
+    const el = document.querySelector('[name="' + name + '"]');
+    return el ? el.value.trim() : '';
+  }
+
+  function submitForm() {
+    const lines = [
+      '=== BUSINESS FREEDOM SNAPSHOT ===',
+      '',
+      '--- 1. O FIRMĚ ---',
+      'Obor: ' + getChecked('obor') + (getVal('obor_jine') ? ', ' + getVal('obor_jine') : ''),
+      'Velikost: ' + getChecked('velikost'),
+      'Počet lidí: ' + getVal('pocet_lidi'),
+      'Obrat: ' + getVal('obrat'),
+      'Produkty/služby: ' + getVal('produkty'),
+      'Web: ' + getVal('web'),
+      '',
+      '--- 2. JAK VYDĚLÁVÁ ---',
+      'Co prodávám: ' + getVal('co_prodavate'),
+      'Ideální klient: ' + getVal('ideal_klient'),
+      'Získávání zákazníků: ' + getVal('ziskavani'),
+      'Cesta zákazníka: ' + getVal('cesta_zakaznika'),
+      'Závislá část: ' + getVal('zavisla_cast'),
+      '',
+      '--- 3. KDE MIZí ČAS ---',
+      'Kde trávím čas: ' + getChecked('cas') + (getVal('cas_jine') ? ', ' + getVal('cas_jine') : ''),
+      'Vysávající činnosti: ' + getVal('vysavani'),
+      'Opakující se úkoly: ' + getVal('opakovani'),
+      'Přestat dělat: ' + getVal('prestat'),
+      'V hlavě: ' + getVal('v_hlave'),
+      '',
+      '--- 4. KDE MIZí PENÍZE ---',
+      'Kde ztrácím: ' + getChecked('penize') + (getVal('penize_jine') ? ', ' + getVal('penize_jine') : ''),
+      'Klíčový problém: ' + getVal('klic_problem'),
+      '',
+      '--- 5. ROLE MAJITELE ---',
+      'Přes mě musí projít: ' + getChecked('pres_vas'),
+      'Kdybych byl 14 dní offline: ' + getVal('offline'),
+      'Kdo řídí koho: ' + getVal('kdo_ridi'),
+      '',
+      '--- 6. AI A AUTOMATIZACE ---',
+      'AI dnes: ' + getVal('ai_dnes'),
+      'Kde AI pomáhá: ' + getVal('ai_pomaha'),
+      'Kde chci víc: ' + getVal('ai_vice'),
+      'AI by převzala: ' + getVal('ai_cast'),
+      'Obavy: ' + getVal('obavy'),
+      '',
+      '--- 7. CÍLE A VIZE ---',
+      'Cíle 12M: ' + getChecked('cile') + (getVal('cile_jine') ? ', ' + getVal('cile_jine') : ''),
+      'Překážky: ' + getVal('prekazky'),
+      'Vize 2027: ' + getVal('vize_2027'),
+      'AI dělá za mě: ' + getChecked('ai_dela'),
+      'Na co mám čas: ' + getChecked('volny_cas'),
+      'Co by stálo za investici: ' + getVal('investice'),
+      '',
+      '--- KONTAKT ---',
+      'Jméno: ' + getVal('jmeno'),
+      'Telefon: ' + getVal('telefon'),
+      'E-mail: ' + getVal('email_kontakt'),
+    ];
+
+    const body = encodeURIComponent(lines.join('\n'));
+    const subject = encodeURIComponent('Business Freedom Snapshot — ' + (getVal('jmeno') || 'nový potenciální klient'));
+    window.location.href = 'mailto:ai.thor.ekosystem@gmail.com?subject=' + subject + '&body=' + body;
+  }
+</script>
 
 </body>
 </html>
